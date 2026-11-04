@@ -1,0 +1,28 @@
+{
+	"name": "node",
+	"version": "1.0.0",
+	"description": "A simple application that generates random names and saves on a database",
+	"keywords": [
+		"nginx",
+		"server",
+		"mysql",
+		"docker",
+		"fullcycle"
+	],
+	"author": "Juliane Pires",
+	"license": "MIT",
+	"type": "module",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"dotenv": "^18.0.9",
+		"express": "^5.3.0",
+		"mysql2": "^3.24.6"
+	},
+	"devDependencies": {
+		"@faker-js/faker": "^10.6.0"
+	}
+}
