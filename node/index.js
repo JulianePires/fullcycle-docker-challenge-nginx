@@ -5,7 +5,6 @@ import createDbConnection from "./config/dbconnection.js";
 const PORT = process.env.PORT || 3000;
 
 export async function createApp() {
-	const N = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
 	const CREATE_TABLE_SQL = `CREATE TABLE IF NOT EXISTS \`people\` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
@@ -18,20 +17,14 @@ export async function createApp() {
 	await createDbConnection(CREATE_TABLE_SQL);
 	await createDbConnection(CLEAR_TABLE_SQL);
 
-	try {
-		for (let i = 0; i < N; i++) {
-			const randomName = faker.person.fullName();
-			names.push(randomName);
-			await createDbConnection(INSERT_SQL, [randomName]);
-		}
-	} catch (error) {
-		console.error("Error inserting names into the database:", error);
-	}
-
 	const app = express();
 
 	app.get("/", async (_, res) => {
 		try {
+			const randomName = faker.person.fullName();
+			names.push(randomName);
+			await createDbConnection(INSERT_SQL, [randomName]);
+
 			const allNames = await createDbConnection(SELECT_SQL);
 
 			const html = `
@@ -47,6 +40,7 @@ export async function createApp() {
           </body>
         </html>
       `;
+
 			res.send(html);
 		} catch (error) {
 			console.error("Error retrieving names from the database:", error);
